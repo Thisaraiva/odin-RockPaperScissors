@@ -3,6 +3,7 @@ console.log("Hello, world!!! Let's go to the glory");
 let options = ["rock", "paper", "scissors"];
 let humanScore = 0;
 let computerScore = 0;
+let numberRounds = 5;
 
 function getComputerChoice() {
     return options[Math.floor(Math.random() * options.length)];
@@ -40,14 +41,29 @@ function playRound(humanChoice, computerChoice){
     } else if(computerChoice === "paper" && humanChoice === "rock"){
         computerScore++;
         return "Computer won! Paper beats Rock!";
+    } else {
+        return "Tie! Game Draw"
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame(){
+    while(humanScore < numberRounds && computerScore < numberRounds){
 
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        
+        console.log("Computer choice: ", computerSelection);
+        console.log("Human choice: ", humanSelection);
+        console.log(playRound(humanSelection, computerSelection));
+        console.log(`Human Score: ${humanScore} e Computer Score: ${computerScore}`);
+        console.log("____________________________________________________");
+    }
 
-console.log("Computer choice: ", computerSelection);
-console.log("Human choice: ", humanSelection);
+    if(humanScore > computerScore){
+        return `Player Win - Final Score: Player: ${humanScore} e Computer: ${computerScore}`;
+    } else {
+        return `Computer Win - Final Score: Player: ${computerScore} e Computer: ${humanScore}`;
+    }
+}
 
-console.log(playRound(humanSelection, computerSelection));
+console.log(playGame());
