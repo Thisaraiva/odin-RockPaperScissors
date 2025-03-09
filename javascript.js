@@ -23,24 +23,31 @@ function getHumanChoice(){
 function playRound(humanChoice, computerChoice){
     if (humanChoice === computerChoice) {
         return "Tie";
+
     } else if(humanChoice === "rock" && computerChoice === "scissors") {
         humanScore++;
         return "Player won! Rock beats Scissor!";
+
     } else if (humanChoice === "scissors" && computerChoice === "paper"){
         humanScore++;
         return "Player won! Scissors beats Paper!";
+
     } else if(humanChoice === "paper" && computerChoice === "rock"){
         humanScore++;
         return "Player won! Paper beats Rock!";
+
     } else if(computerChoice === "rock" && humanChoice === "scissors") {
         computerScore++;
         return "Computer won! Rock beats Scissor!";
+
     } else if (computerChoice === "scissors" && humanChoice === "paper"){
         computerScore++;
         return "Computer won! Scissors beats Paper!";
+
     } else if(computerChoice === "paper" && humanChoice === "rock"){
         computerScore++;
         return "Computer won! Paper beats Rock!";
+
     } else {
         return "Tie! Game Draw"
     }
@@ -61,6 +68,7 @@ function playGame(){
 
     if(humanScore > computerScore){
         return `Player Win - Final Score: Player: ${humanScore} e Computer: ${computerScore}`;
+        
     } else {
         return `Computer Win - Final Score: Player: ${computerScore} e Computer: ${humanScore}`;
     }
