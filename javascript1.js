@@ -1,6 +1,6 @@
 console.log("Hello, world!!! Let's go to the glory");
 
-let options = ["rock", "paper", "scissors"];
+let options = ["Rock", "Paper", "Scissors"];
 let humanScore = 0;
 let computerScore = 0;
 let numberRounds = 5;
@@ -9,27 +9,12 @@ function getComputerChoice() {
     return options[Math.floor(Math.random() * options.length)];
 }
 
-function getHumanChoice() {
-    let choice = prompt("What's your choice? (rock, paper or scissors)").toLowerCase();
-
-    if (options.includes(choice)) {
-        return choice;
-    } else {
-        alert("Invalid choice. Please choose rock, paper, or scissors.");
-        return getHumanChoice();
-    }
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 function playRound(humanChoice, computerChoice) {
     const outcomes = {
-        rock: { scissors: "Player", paper: "Computer" },
-        paper: { rock: "Player", scissors: "Computer" },
-        scissors: { paper: "Player", rock: "Computer" }
-    }
+        Rock: { Scissors: "Player", Paper: "Computer" },
+        Paper: { Rock: "Player", Scissors: "Computer" },
+        Scissors: { Paper: "Player", Rock: "Computer" }
+    };
 
     if (humanChoice === computerChoice) {
         return "Tie";
@@ -38,37 +23,67 @@ function playRound(humanChoice, computerChoice) {
         if (winner === "Player") {
             humanScore++;
             return `Round winner ${winner}!
-            \n${capitalizeFirstLetter(humanChoice)} beats ${capitalizeFirstLetter(computerChoice)}!
-            \nScore - Player: ${humanScore} e Computer: ${computerScore}`;
+            <br>${humanChoice} beats ${computerChoice}!`;
         } else {
             computerScore++;
-            return `Round winner ${winner}! 
-            \n${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(humanChoice)}!
-            \nScore - Player: ${humanScore} e Computer: ${computerScore}`;
+            return `Round winner ${winner}!
+            <br>${computerChoice} beats ${humanChoice}!`;
         }
     }
 }
 
-function playGame() {
-    while (humanScore < numberRounds && computerScore < numberRounds) {
+function updateUI(result) {
+    const resultsDiv = document.getElementById('results');
+    const scoreDiv = document.getElementById('score');
+    const winnerDiv = document.getElementById('winner');
 
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+    resultsDiv.innerHTML = result; // Exibe o resultado da rodada
+    scoreDiv.textContent = `Score - Player: ${humanScore} x Computer: ${computerScore}`; // Atualiza a pontuação
 
-        console.log("Computer choice: ", computerSelection);
-        console.log("Player choice: ", humanSelection);
-        console.log(playRound(humanSelection, computerSelection));
-        //console.log(`Player Score: ${humanScore} e Computer Score: ${computerScore}`);
-        console.log("____________________________________________________");
-    }
 
-    if (humanScore > computerScore) {
-        return `Player Win - Final Score: Player: ${humanScore} e Computer: ${computerScore}`;
-    } else if (computerScore > humanScore){
-        return `Computer Win - Final Score: Player: ${computerScore} e Computer: ${humanScore}`;
-    } else {
-        return `Tie! Final Score: Player ${humanScore} - Computer ${computerScore}`;
+    // Verifica se um jogador atingiu 5 pontos
+    if (humanScore === numberRounds || computerScore === numberRounds) {
+        if (humanScore > computerScore) {
+            winnerDiv.textContent = "Player wins the game!";
+        } else {
+            winnerDiv.textContent = "Computer wins the game!";
+        }
+
+        disableButtons(true); // Desabilita os botões
+        // Reseta o jogo após 5 segundos
+        setTimeout(() => {
+            resetGame();
+            // Atualiza a interface após o reset
+            scoreDiv.textContent = `Score - Player: ${humanScore} x Computer: ${computerScore}`;
+            resultsDiv.innerHTML = ""; // Limpa o resultado da rodada
+            winnerDiv.textContent = ""; // Limpa a mensagem de vitória
+            disableButtons(false); // Habilita os botões
+        }, 5000);
     }
 }
 
-console.log(playGame());
+function disableButtons(disable) {
+    document.getElementById('rock').disabled = disable;
+    document.getElementById('paper').disabled = disable;
+    document.getElementById('scissors').disabled = disable;
+}
+
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+}
+
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+
+function handleClick(humanSelection) {
+    const computerSelection = getComputerChoice();
+    const result = playRound(humanSelection, computerSelection);
+    updateUI(result);
+
+}
+
+rock.addEventListener('click', () => handleClick('Rock'));
+paper.addEventListener('click', () => handleClick('Paper'));
+scissors.addEventListener('click', () => handleClick('Scissors'));
