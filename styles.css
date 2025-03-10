@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    gap: 1rem;
+}
+
+.container h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.container button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-self: auto;
+    align-self: auto;
+}
+
+#results {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    color: #007bff;
+    font-size: xx-large;
+    gap: 1rem;
+}
+
+#score {
+    font-size: 2rem;
+}
+
+#winner {
+    font-size: 3rem;
+    color: crimson;
+}
